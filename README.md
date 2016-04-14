@@ -65,4 +65,9 @@ Check out the full [example project](https://github.com/EdwardvanRaak/MaterialBa
 ##Screenshots
 ![Image](https://raw.githubusercontent.com/EdwardvanRaak/MaterialBarcodeScanner/master/DEV/screens/screenshot1.png)
 
+#Developed By
+
+* Edward van Raak
+ * edwardvraak@gmail.com
+ * [Donate with Paypal](https://www.paypal.me/EdwardvanRaak)
 

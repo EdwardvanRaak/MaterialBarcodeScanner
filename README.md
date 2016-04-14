@@ -3,8 +3,6 @@ Easy to use barcode reader for your Android Project (Uses Google Mobile Vision A
 
 [ ![Download](https://api.bintray.com/packages/edwardvraak/maven/MaterialBarcodeScanner/images/download.svg) ](https://bintray.com/edwardvraak/maven/MaterialBarcodeScanner/_latestVersion)
 
-**Still in alpha so expect bugs, pain and suffering!**
-
 **Only supports very basic features right now, please wait warmly for version 1.0!**
 
 ###Overview

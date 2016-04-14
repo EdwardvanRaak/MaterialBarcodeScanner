@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -35,6 +36,11 @@ public class MaterialBarcodeScannerActivity extends AppCompatActivity {
 
     private SoundPoolPlayer mSoundPoolPlayer;
 
+    /**
+     * true if no further barcode should be detected or given as a result
+     */
+    private boolean mDetectionConsumed = false;
+
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -49,6 +55,15 @@ public class MaterialBarcodeScannerActivity extends AppCompatActivity {
         mMaterialBarcodeScannerBuilder = mMaterialBarcodeScanner.getMaterialBarcodeScannerBuilder();
         barcodeDetector = mMaterialBarcodeScanner.getMaterialBarcodeScannerBuilder().getBarcodeDetector();
         startCameraSource();
+        setupLayout();
+    }
+
+    private void setupLayout() {
+        TextView topTextView = (TextView) findViewById(R.id.topText);
+        String topText = mMaterialBarcodeScannerBuilder.getText();
+        if(!mMaterialBarcodeScannerBuilder.getText().equals("")){
+            topTextView.setText(topText);
+        }
     }
 
     /**
@@ -69,23 +84,26 @@ public class MaterialBarcodeScannerActivity extends AppCompatActivity {
         BarcodeGraphicTracker.NewDetectionListener listener =  new BarcodeGraphicTracker.NewDetectionListener() {
             @Override
             public void onNewDetection(Barcode barcode) {
-                Log.d(TAG, "Barcode detected! - " + barcode.displayValue);
-                EventBus.getDefault().postSticky(barcode);
-                if(mMaterialBarcodeScannerBuilder.isBleepEnabled()){
-                    mSoundPoolPlayer.playShortResource(R.raw.bleep);
-                }
-                mGraphicOverlay.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mCameraSourcePreview != null) {
-                            mCameraSourcePreview.release();
-                        }
-                        if(mSoundPoolPlayer != null){
-                            mSoundPoolPlayer.release();
-                        }
-                        finish();
+                if(!mDetectionConsumed){
+                    mDetectionConsumed = true;
+                    Log.d(TAG, "Barcode detected! - " + barcode.displayValue);
+                    EventBus.getDefault().postSticky(barcode);
+                    if(mMaterialBarcodeScannerBuilder.isBleepEnabled()){
+                        mSoundPoolPlayer.playShortResource(R.raw.bleep);
                     }
-                },50);
+                    mGraphicOverlay.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mCameraSourcePreview != null) {
+                                mCameraSourcePreview.release();
+                            }
+                            if(mSoundPoolPlayer != null){
+                                mSoundPoolPlayer.release();
+                            }
+                            finish();
+                        }
+                    },50);
+                }
             }
         };
         BarcodeTrackerFactory barcodeFactory = new BarcodeTrackerFactory(mGraphicOverlay, listener, mMaterialBarcodeScannerBuilder.getTrackerColor());

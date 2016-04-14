@@ -36,4 +36,13 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:padding="16dp"
+        android:textColor="@android:color/white"
+        android:id="@+id/topText"
+        android:layout_gravity="center_horizontal|top" />
+
 </FrameLayout>

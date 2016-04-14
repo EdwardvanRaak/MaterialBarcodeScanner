@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 .withEnableAutoFocus(true)
                 .withBleepEnabled(true)
                 .withBackfacingCamera()
+                .withText("Scanning...")
                 .withResultListener(new MaterialBarcodeScanner.OnResultListener() {
                     @Override
                     public void onResult(Barcode barcode) {

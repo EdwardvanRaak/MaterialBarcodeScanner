@@ -30,6 +30,8 @@ public class MaterialBarcodeScannerBuilder {
     protected int mTrackerColor = Color.parseColor("#F44336"); //Material Red 500
 
     protected boolean mBleepEnabled = false;
+
+    protected String mText = "";
     /**
      * Default constructor
      */
@@ -83,7 +85,7 @@ public class MaterialBarcodeScannerBuilder {
     }
 
     /**
-     *  Either CameraSource.CAMERA_FACING_FRONT or CameraSource.CAMERA_FACING_BACK
+     * Either CameraSource.CAMERA_FACING_FRONT or CameraSource.CAMERA_FACING_BACK
      * @param cameraFacing
      */
     public MaterialBarcodeScannerBuilder withCameraFacing(int cameraFacing){
@@ -113,6 +115,14 @@ public class MaterialBarcodeScannerBuilder {
      */
     public MaterialBarcodeScannerBuilder withBleepEnabled(boolean enabled){
         mBleepEnabled = enabled;
+        return this;
+    }
+
+    /**
+     * Shows a text message at the top of the barcode scanner
+     */
+    public MaterialBarcodeScannerBuilder withText(String text){
+        mText = text;
         return this;
     }
 
@@ -181,6 +191,14 @@ public class MaterialBarcodeScannerBuilder {
      */
     public int getTrackerColor() {
         return mTrackerColor;
+    }
+
+    /**
+     * Get the text associated with this builder
+     * @return
+     */
+    public String getText() {
+        return mText;
     }
 
     /**

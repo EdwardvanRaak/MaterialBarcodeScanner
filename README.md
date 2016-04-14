@@ -5,6 +5,8 @@ Easy to use barcode reader for your Android Project (Uses Google Mobile Vision A
 
 **Still in alpha so expect bugs, pain and suffering!**
 
+**Only supports very basic features right now, please wait warmly for version 1.0!**
+
 ###Overview
 - Integrate in a **few minutes**
 - Quick and simple api

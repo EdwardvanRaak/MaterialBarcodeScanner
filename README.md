@@ -68,3 +68,8 @@ compile 'com.edwardvanraak:MaterialBarcodeScanner:0.0.2-ALPHA'
 ##3. Start scanning!
 
 Check out the example project for code required for camera permissions on Android 6.0 Marshmallow
+
+##Screenshots
+![Image](https://raw.githubusercontent.com/EdwardvanRaak/MaterialBarcodeScanner/master/DEV/screens/screenshot1.png)
+
+

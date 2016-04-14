@@ -35,6 +35,7 @@ compile 'com.edwardvanraak:MaterialBarcodeScanner:0.0.3-ALPHA'
                 .withEnableAutoFocus(true)
                 .withBleepEnabled(true)
                 .withBackfacingCamera()
+                .withText("Scanning...")
                 .withResultListener(new MaterialBarcodeScanner.OnResultListener() {
                     @Override
                     public void onResult(Barcode barcode) {

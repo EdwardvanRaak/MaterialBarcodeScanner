@@ -15,7 +15,7 @@ Easy to use barcode reader for your Android Project (Uses Google Mobile Vision A
 - Supports 2D barcodes: QR Code, Data Matrix, PDF-417, Aztec
 
 #Setup
-##1. Provide the gradle dependency
+##1. Provide gradle dependency
 
 ```gradle
 repositories {

@@ -1,10 +1,14 @@
 package com.edwardvanraak.materialbarcodescanner;
 
 import android.app.Dialog;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -18,6 +22,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+
+import static junit.framework.Assert.assertNotNull;
 
 public class MaterialBarcodeScannerActivity extends AppCompatActivity {
 
@@ -41,12 +47,17 @@ public class MaterialBarcodeScannerActivity extends AppCompatActivity {
      */
     private boolean mDetectionConsumed = false;
 
+    private boolean mFlashOn = false;
+
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        if(getWindow() != null){
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }else{
+            Log.e(TAG, "Barcode scanner could not go into fullscreen mode!");
+        }
         setContentView(R.layout.barcode_capture);
-        getSupportActionBar().hide();
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
@@ -59,10 +70,34 @@ public class MaterialBarcodeScannerActivity extends AppCompatActivity {
     }
 
     private void setupLayout() {
-        TextView topTextView = (TextView) findViewById(R.id.topText);
+        final TextView topTextView = (TextView) findViewById(R.id.topText);
+        assertNotNull(topTextView);
         String topText = mMaterialBarcodeScannerBuilder.getText();
         if(!mMaterialBarcodeScannerBuilder.getText().equals("")){
             topTextView.setText(topText);
+        }
+        setupButtons();
+    }
+
+    private void setupButtons() {
+        final LinearLayout flashOnButton = (LinearLayout)findViewById(R.id.flashIconButton);
+        final ImageView flashToggleIcon = (ImageView)findViewById(R.id.flashIcon);
+        assertNotNull(flashOnButton);
+        flashOnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFlashOn) {
+                    flashToggleIcon.setBackgroundResource(R.drawable.ic_flash_on_white_24dp);
+                    disableTorch();
+                } else {
+                    flashToggleIcon.setBackgroundResource(R.drawable.ic_flash_off_white_24dp);
+                    enableTorch();
+                }
+                mFlashOn ^= true;
+            }
+        });
+        if(mMaterialBarcodeScannerBuilder.isFlashEnabledByDefault()){
+            flashToggleIcon.setBackgroundResource(R.drawable.ic_flash_off_white_24dp);
         }
     }
 
@@ -94,12 +129,6 @@ public class MaterialBarcodeScannerActivity extends AppCompatActivity {
                     mGraphicOverlay.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            if (mCameraSourcePreview != null) {
-                                mCameraSourcePreview.release();
-                            }
-                            if(mSoundPoolPlayer != null){
-                                mSoundPoolPlayer.release();
-                            }
                             finish();
                         }
                     },50);
@@ -118,6 +147,24 @@ public class MaterialBarcodeScannerActivity extends AppCompatActivity {
                 mCameraSource.release();
                 mCameraSource = null;
             }
+        }
+    }
+
+    private void enableTorch() throws SecurityException{
+        mMaterialBarcodeScannerBuilder.getCameraSource().setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        try {
+            mMaterialBarcodeScannerBuilder.getCameraSource().start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void disableTorch() throws SecurityException{
+        mMaterialBarcodeScannerBuilder.getCameraSource().setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+        try {
+            mMaterialBarcodeScannerBuilder.getCameraSource().start();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -152,7 +199,19 @@ public class MaterialBarcodeScannerActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if(isFinishing()){
-            EventBus.getDefault().removeStickyEvent(MaterialBarcodeScanner.class);
+            clean();
+        }
+    }
+
+    private void clean() {
+        EventBus.getDefault().removeStickyEvent(MaterialBarcodeScanner.class);
+        if (mCameraSourcePreview != null) {
+            mCameraSourcePreview.release();
+            mCameraSourcePreview = null;
+        }
+        if(mSoundPoolPlayer != null){
+            mSoundPoolPlayer.release();
+            mSoundPoolPlayer = null;
         }
     }
 }

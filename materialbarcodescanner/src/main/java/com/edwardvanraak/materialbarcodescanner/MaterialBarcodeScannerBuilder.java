@@ -31,6 +31,8 @@ public class MaterialBarcodeScannerBuilder {
 
     protected boolean mBleepEnabled = false;
 
+    protected boolean mFlashEnabledByDefault = false;
+
     protected String mText = "";
     /**
      * Default constructor
@@ -127,6 +129,14 @@ public class MaterialBarcodeScannerBuilder {
     }
 
     /**
+     * Shows a text message at the top of the barcode scanner
+     */
+    public MaterialBarcodeScannerBuilder withFlashLightEnabledByDefault(){
+        mFlashEnabledByDefault = true;
+        return this;
+    }
+
+    /**
      * Build a ready to use MaterialBarcodeScanner
      *
      * @return A ready to use MaterialBarcodeScanner
@@ -156,6 +166,7 @@ public class MaterialBarcodeScannerBuilder {
         mBarcodeDetector = new BarcodeDetector.Builder(mActivity).build();
         mCameraSource = new CameraSource.Builder(mActivity, mBarcodeDetector)
                 .setFacing(mFacing)
+                .setFlashMode(mFlashEnabledByDefault ? Camera.Parameters.FLASH_MODE_TORCH : null)
                 .setFocusMode(focusMode)
                 .build();
     }
@@ -207,6 +218,14 @@ public class MaterialBarcodeScannerBuilder {
      */
     public boolean isBleepEnabled() {
         return mBleepEnabled;
+    }
+
+    /**
+     * Get the flash enabled by default value associated with this builder
+     * @return
+     */
+    public boolean isFlashEnabledByDefault() {
+        return mFlashEnabledByDefault;
     }
 
     public void clean() {

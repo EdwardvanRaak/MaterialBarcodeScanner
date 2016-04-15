@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/topLayout"
     android:layout_width="match_parent"
@@ -40,9 +39,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:padding="16dp"
+        android:shadowColor="@color/text_shadow"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:layout_marginTop="64dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:textColor="@android:color/white"
         android:id="@+id/topText"
         android:layout_gravity="center_horizontal|top" />
+
+    <include layout="@layout/actions_main"/>
 
 </FrameLayout>

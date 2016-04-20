@@ -33,6 +33,8 @@ public class MaterialBarcodeScannerBuilder {
 
     protected boolean mFlashEnabledByDefault = false;
 
+    protected int mBarcodeFormats = Barcode.ALL_FORMATS;
+
     protected String mText = "";
     /**
      * Default constructor
@@ -137,6 +139,43 @@ public class MaterialBarcodeScannerBuilder {
     }
 
     /**
+     * Bit mask (containing values like QR_CODE and so on) that selects which formats this barcode detector should recognize.
+     * @param barcodeFormats
+     * @return
+     */
+    public MaterialBarcodeScannerBuilder withBarcodeFormats(int barcodeFormats){
+        mBarcodeFormats = barcodeFormats;
+        return this;
+    }
+
+    /**
+     * Enables exclusive scanning on EAN-13, EAN-8, UPC-A, UPC-E, Code-39, Code-93, Code-128, ITF and Codabar barcodes.
+     * @return
+     */
+    public MaterialBarcodeScannerBuilder withOnly2DScanning() {
+        mBarcodeFormats = Barcode.EAN_13 | Barcode.EAN_8 | Barcode.UPC_A | Barcode.UPC_A | Barcode.UPC_E | Barcode.CODE_39 | Barcode.CODE_93 | Barcode.CODE_128 | Barcode.ITF | Barcode.CODABAR;
+        return this;
+    }
+
+    /**
+     * Enables exclusive scanning on QR Code, Data Matrix, PDF-417 and Aztec barcodes.
+     * @return
+     */
+    public MaterialBarcodeScannerBuilder withOnly3DScanning(){
+        mBarcodeFormats = Barcode.QR_CODE | Barcode.DATA_MATRIX | Barcode.PDF417 | Barcode.AZTEC;
+        return this;
+    }
+
+    /**
+     * Enables exclusive scanning on QR Codes, no other barcodes will be detected
+     * @return
+     */
+    public MaterialBarcodeScannerBuilder withOnlyQRCodeScanning(){
+        mBarcodeFormats = Barcode.QR_CODE;
+        return this;
+    }
+
+    /**
      * Build a ready to use MaterialBarcodeScanner
      *
      * @return A ready to use MaterialBarcodeScanner
@@ -163,7 +202,9 @@ public class MaterialBarcodeScannerBuilder {
         if(mAutoFocusEnabled){
             focusMode = Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE;
         }
-        mBarcodeDetector = new BarcodeDetector.Builder(mActivity).build();
+        mBarcodeDetector = new BarcodeDetector.Builder(mActivity)
+                .setBarcodeFormats(mBarcodeFormats)
+                .build();
         mCameraSource = new CameraSource.Builder(mActivity, mBarcodeDetector)
                 .setFacing(mFacing)
                 .setFlashMode(mFlashEnabledByDefault ? Camera.Parameters.FLASH_MODE_TORCH : null)

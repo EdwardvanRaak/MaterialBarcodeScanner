@@ -21,7 +21,7 @@ Easy to use barcode reader for your Android Project (Uses Google Mobile Vision A
 ##1. Provide gradle dependency
 
 ```gradle
-compile 'com.edwardvanraak:MaterialBarcodeScanner:0.0.5-ALPHA'
+compile 'com.edwardvanraak:MaterialBarcodeScanner:0.0.6-ALPHA'
 ```
 
 ##2. Build a MaterialBarcodeScanner
@@ -67,6 +67,22 @@ Check out the full [example project](https://github.com/EdwardvanRaak/MaterialBa
 
 #Additional Setup
 
+##Center tracking mode
+
+By default a barcode is tracked/highlighted at the location at which it was found.  
+With <i>center tracking mode</i> a square image will be shown during scanning that will turn green when a barcode is found.
+Please note that you can still scan a barcode outside the center tracker! This is purely a visual change.
+
+To activate <i>center tracking mode</i> simply call the following builder method:
+```java
+.withCenterTracker()
+```
+If you want to provide your own image for the tracker you can use:
+```java
+.withCenterTracker(R.drawable.your_tracker_image, R.drawable.your_detected_state_tracker_image):
+```
+<img src="https://raw.githubusercontent.com/EdwardvanRaak/MaterialBarcodeScanner/master/DEV/screens/center_tracker_screenshot.png" width="150">
+
 ##Exclusive barcode scanning
 
 In some situations you might want to scan for only a certain type of barcode like QR-Codes or 2D barcodes. You can do this with the following builder methods:
@@ -75,10 +91,6 @@ In some situations you might want to scan for only a certain type of barcode lik
 .withOnlyQRCodeScanning()
 .withOnly3DScanning()
 .withOnly2DScanning()
-```
-If you want to scan for a very specific combination of barcodes you can setup the builder like this:
-```java
-.withBarcodeFormats(Barcode.AZTEC | Barcode.EAN_13 | Barcode.CODE_93)
 ```
 
 ##Screenshots

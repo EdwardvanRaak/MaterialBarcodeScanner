@@ -50,7 +50,8 @@ public class BarcodeGraphic extends GraphicOverlay.Graphic {
 
         mTextPaint = new Paint();
         mTextPaint.setColor(trackerColor);
-        mTextPaint.setTextSize(36.0f);
+        mTextPaint.setFakeBoldText(true);
+        mTextPaint.setTextSize(46.0f);
     }
 
     public int getId() {

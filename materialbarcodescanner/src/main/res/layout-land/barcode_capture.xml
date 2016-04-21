@@ -35,6 +35,17 @@
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
+    <include layout="@layout/actions_main"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:layout_margin="38dp"
+        android:id="@+id/barcode_square"
+        android:alpha="0.5"
+        android:layout_gravity="center" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,13 +54,11 @@
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="2"
-        android:layout_marginTop="64dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:textColor="@android:color/white"
         android:id="@+id/topText"
-        android:layout_gravity="center_horizontal|top" />
-
-    <include layout="@layout/actions_main"/>
+        android:textStyle="bold"
+        android:layout_gravity="center" />
 
 </FrameLayout>

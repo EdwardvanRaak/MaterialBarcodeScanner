@@ -36,6 +36,12 @@ public class MaterialBarcodeScannerBuilder {
     protected int mBarcodeFormats = Barcode.ALL_FORMATS;
 
     protected String mText = "";
+
+    protected int mScannerMode = MaterialBarcodeScanner.SCANNER_MODE_FREE;
+
+    protected int mTrackerResourceID = R.drawable.material_barcode_square_512;
+    protected int mTrackerDetectedResourceID = R.drawable.material_barcode_square_512_green;
+
     /**
      * Default constructor
      */
@@ -176,6 +182,30 @@ public class MaterialBarcodeScannerBuilder {
     }
 
     /**
+     * Enables the default center tracker. This tracker is always visible and turns green when a barcode is found.\n
+     * Please note that you can still scan a barcode outside the center tracker! This is purely a visual change.
+     * @return
+     */
+    public MaterialBarcodeScannerBuilder withCenterTracker(){
+        mScannerMode = MaterialBarcodeScanner.SCANNER_MODE_CENTER;
+        return this;
+    }
+
+    /**
+     * Enables the center tracker with a custom drawable resource. This tracker is always visible.\n
+     * Please note that you can still scan a barcode outside the center tracker! This is purely a visual change.
+     * @param trackerResourceId a drawable resource id
+     * @param detectedTrackerResourceId a drawable resource id for the detected tracker state
+     * @return
+     */
+    public MaterialBarcodeScannerBuilder withCenterTracker(int trackerResourceId, int detectedTrackerResourceId){
+        mScannerMode = MaterialBarcodeScanner.SCANNER_MODE_CENTER;
+        mTrackerResourceID = trackerResourceId;
+        mTrackerDetectedResourceID = detectedTrackerResourceId;
+        return this;
+    }
+
+    /**
      * Build a ready to use MaterialBarcodeScanner
      *
      * @return A ready to use MaterialBarcodeScanner
@@ -267,6 +297,30 @@ public class MaterialBarcodeScannerBuilder {
      */
     public boolean isFlashEnabledByDefault() {
         return mFlashEnabledByDefault;
+    }
+
+    /**
+     * Get the tracker detected resource id value associated with this builder
+     * @return
+     */
+    public int getTrackerDetectedResourceID() {
+        return mTrackerDetectedResourceID;
+    }
+
+    /**
+     * Get the tracker resource id value associated with this builder
+     * @return
+     */
+    public int getTrackerResourceID() {
+        return mTrackerResourceID;
+    }
+
+    /**
+     * Get the scanner mode value associated with this builder
+     * @return
+     */
+    public int getScannerMode() {
+        return mScannerMode;
     }
 
     public void clean() {

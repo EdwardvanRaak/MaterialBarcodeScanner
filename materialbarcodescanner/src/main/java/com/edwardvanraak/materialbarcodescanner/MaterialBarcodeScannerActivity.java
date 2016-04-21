@@ -77,6 +77,27 @@ public class MaterialBarcodeScannerActivity extends AppCompatActivity {
             topTextView.setText(topText);
         }
         setupButtons();
+        setupCenterTracker();
+    }
+
+    private void setupCenterTracker() {
+        if(mMaterialBarcodeScannerBuilder.getScannerMode() == MaterialBarcodeScanner.SCANNER_MODE_CENTER){
+            final ImageView centerTracker  = (ImageView) findViewById(R.id.barcode_square);
+            centerTracker.setImageResource(mMaterialBarcodeScannerBuilder.getTrackerResourceID());
+            mGraphicOverlay.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void updateCenterTrackerForDetectedState() {
+        if(mMaterialBarcodeScannerBuilder.getScannerMode() == MaterialBarcodeScanner.SCANNER_MODE_CENTER){
+            final ImageView centerTracker  = (ImageView) findViewById(R.id.barcode_square);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    centerTracker.setImageResource(mMaterialBarcodeScannerBuilder.getTrackerDetectedResourceID());
+                }
+            });
+        }
     }
 
     private void setupButtons() {
@@ -123,6 +144,7 @@ public class MaterialBarcodeScannerActivity extends AppCompatActivity {
                     mDetectionConsumed = true;
                     Log.d(TAG, "Barcode detected! - " + barcode.displayValue);
                     EventBus.getDefault().postSticky(barcode);
+                    updateCenterTrackerForDetectedState();
                     if(mMaterialBarcodeScannerBuilder.isBleepEnabled()){
                         mSoundPoolPlayer.playShortResource(R.raw.bleep);
                     }

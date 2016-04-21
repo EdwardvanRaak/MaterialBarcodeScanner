@@ -22,6 +22,12 @@ public class MaterialBarcodeScanner {
      */
     public static final int RC_HANDLE_CAMERA_PERM = 2;
 
+    /**
+     * Scanner modes
+     */
+    public static final int SCANNER_MODE_FREE = 1;
+    public static final int SCANNER_MODE_CENTER = 2;
+
     protected final MaterialBarcodeScannerBuilder mMaterialBarcodeScannerBuilder;
 
     private FrameLayout mContentView; //Content frame for fragments

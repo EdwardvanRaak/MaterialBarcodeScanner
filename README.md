@@ -12,7 +12,7 @@ Easy to use barcode reader for your Android Project (Uses Google Mobile Vision A
 - Integrate in a **few minutes**
 - Quick and simple api
 - No external apps required
-- Uses Google Mobile Vision API (fast scanning, local)
+- Uses Google Mobile Vision API (fast, local and rotation free)
 - Automatically parses QR Codes, Data Matrix, PDF-417, and Aztec values
 - Supports 1D barcodes: EAN-13, EAN-8, UPC-A, UPC-E, Code-39, Code-93, Code-128, ITF, Codabar
 - Supports 2D barcodes: QR Code, Data Matrix, PDF-417, Aztec

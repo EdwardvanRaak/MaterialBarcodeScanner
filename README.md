@@ -93,6 +93,11 @@ In some situations you might want to scan for only a certain type of barcode lik
 .withOnly2DScanning()
 ```
 
+If you want to scan for a very specific combination of barcodes you can setup the builder like this:		
+```java		
+.withBarcodeFormats(Barcode.AZTEC | Barcode.EAN_13 | Barcode.CODE_93)		
+```
+
 ##Screenshots
 ![Image](https://raw.githubusercontent.com/EdwardvanRaak/MaterialBarcodeScanner/master/DEV/screens/screenshot1.png)
 
